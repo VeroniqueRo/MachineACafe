@@ -1,0 +1,55 @@
+button {
+    font-family: Calibri, sans-serif;
+    font-size:1em;
+    font-weight: bold;
+    width: 190px;
+    height: 50px;
+    background-color:#f2f2f2;
+    color: black;
+}
+
+h1 {
+    text-align:center;
+}
+
+.mainContener {
+    width: 800px;
+    height: 100%;
+    line-height:100%; /* centrage vertical */
+    text-align:center; /* centrage horizontal */ 
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.selected {
+    color: white;
+    background:green
+}
+#afficheurInfo {
+    font-family: Calibri, sans-serif;
+    font-size:1.1em;
+    text-align: center;
+    width: 800px;
+    height: 100px;
+    background-color:#6FEE84;
+    color: black;
+    line-height:100px; /* centrage vertical */
+    text-align:center; /* centrage horizontal */ 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#afficheurMonnaie {
+    font-family: Calibri, sans-serif;
+    font-size:1.5em;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 100px;
+    background-color:#6FEE84;
+    color: black;
+    line-height:100px; /* centrage vertical */
+    text-align:center; /* centrage horizontal */ 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
