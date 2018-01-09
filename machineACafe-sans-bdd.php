@@ -1,6 +1,7 @@
 <?php
 	//lien vers les fonctions php
 	include "assets/_php/fonctions.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Machine à café en php</title>
-	<!-- liens vers les librairies jquery et bootstrap-->
+	<!-- liens vers les librairies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/_css/machineACafe.css">
 
@@ -27,34 +28,49 @@
 			<form method="post" action="machineACafe.php">
 				<select name="choixBoisson">
 					<option>Choisissez votre boisson</option>
-					<?= menuDeroulant()?>
+					<?php 
+					//Version avec données dans un tableau interne à la page
+					foreach ($boissonsTab as $boisson => $recette)
+					{
+						echo "<option>" . $boisson . "</option>";
+					}
+					?>
 				</select>
 				<input type="number" min="0" max="5" name="choixSucre" placeholder="Combien de sucres ?"/>
 				<input type="submit" value="Valider"/>
 			</form>
 			<p>
-			
+			<?php
+			// version avec tableau interne à la page PHP
+			// Teste si la variable existe
+			if (isset($_POST["choixBoisson"]) AND isset($_POST["choixSucre"]))
+			{
+				echo "Vous avez choisi '" . $_POST["choixBoisson"] . "', dont la recette est :<br>";
+ 				echo prepareBoisson($_POST["choixBoisson"], $_POST["choixSucre"]);
+			} 
+			else 
+			{
+				echo $messageAttente;
+			}
+			?>
 			</p>
 		</div>
 
-		
 		<div class="blocInfos">
+			
+			<?php
 
-		<?php
+			
 
-			if (isset($_POST["choixBoisson"]) AND isset($_POST["choixSucre"])) 
-			{
-			  echo afficheRecette($_POST["choixBoisson"],$_POST["choixSucre"]);
-			} 
-			else
-			{
-			  echo $messageAttente;
-			} 
+			?>
 
-		?>
+			<!-- 
+			Solde = 
+			<?= $argentInsere ?> //Insertion de l'argent inséré en php
+			.00 €
+			-->
 
 		</div>
-			
 		
 	   	<!-- <div id="pieces">
 	       	<img id="btnCinqCts" class="piece" alt="0.05" src="images/5_cts.png">
