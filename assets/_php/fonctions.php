@@ -75,13 +75,28 @@ function afficheRecette($database, $choixBoisson, $choixSucres) {
     
   }
 
-  if ($choixSucres > 0)
-  {
-      $recetteFinale .=  "avec ".$choixSucres . " sucre(s)" ."<br>";
+  if ($choixSucres == 1)  {
+    $recetteFinale .=  "avec ".$choixSucres . " sucre" ."<br>";
+  } else if ($choixSucres > 1) {
+    $recetteFinale .=  "avec ".$choixSucres . " sucres" ."<br>";
+  } else if ($choixSucres == 0) {
+    $recetteFinale .=  "Sans sucre" ."<br>";
   }
 
   return $recetteFinale;
   $reponseBddMachineacafe->closeCursor(); // Termine le traitement de la requête
+}
+
+function ajouterSucre($recetteTab, $nbSucres) {
+  if ($nbSucres == 1) {
+    array_push($recetteTab, " Sucre x " . $nbSucres);
+  } else if ($nbSucres > 1) {
+    array_push($recetteTab, " Sucres x " . $nbSucres);
+  } else if ($nbSucres == 0) {
+    array_push($recetteTab, " Sans sucre");
+  }
+
+  return $recetteTab;
 }
 
 ?>
