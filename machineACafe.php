@@ -27,7 +27,7 @@
 			<form method="post" action="machineACafe.php">
 				<select name="choixBoisson">
 					<option>Choisissez votre boisson</option>
-					<?= menuDeroulant()?>
+					<?= menuDeroulant($mabdd)?>
 				</select>
 				<input type="number" min="0" max="5" name="choixSucre" placeholder="Combien de sucres ?"/>
 				<input type="submit" value="Valider"/>
@@ -44,7 +44,7 @@
 
 			if (isset($_POST["choixBoisson"]) AND isset($_POST["choixSucre"])) 
 			{
-			  echo afficheRecette($_POST["choixBoisson"],$_POST["choixSucre"]);
+			  echo afficheRecette($mabdd,$_POST["choixBoisson"],$_POST["choixSucre"]);
 			} 
 			else
 			{
