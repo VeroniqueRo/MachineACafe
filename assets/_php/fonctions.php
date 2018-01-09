@@ -26,12 +26,13 @@ function connection(){
     return $bdd;
   }
 
-// Fonction qui utilise les informations de la BDD
-function menuDeroulant() {
+$mabdd = connection();
 
-  $bdd = connection();
+// Fonction qui utilise les informations de la BDD
+function menuDeroulant($database) {
+
   $menu = "";
-  $reqDrinkName = $bdd->query('SELECT nomboisson FROM boisson');
+  $reqDrinkName = $database->query('SELECT nomboisson FROM boisson');
 
   // affiche chaque entrée une à une
   while ($tabDrinkName = $reqDrinkName->fetch())
@@ -43,32 +44,34 @@ function menuDeroulant() {
   $reqDrinkName->closeCursor();
 }
   
-function afficheRecette($choixBoisson, $choixSucres) {
+function afficheRecette($database, $choixBoisson, $choixSucres) {
   
-  $bdd = connection();
   $i=0;
   $recetteFinale = "";
   
   // Si la connexion est ok, récupère la liste des boissons 
-  $reponseBddMachineacafe = $bdd->prepare('
-  SELECT  nomboisson, nomingredients, qteboisson
-  FROM boisson_ingredients
-  INNER JOIN boisson ON boisson.codeboisson = boisson_ingredients.boisson_codeboisson
-  INNER JOIN ingredients ON ingredients.codeingredients = boisson_ingredients.ingredients_codeingredients
-  WHERE nomboisson = :nomboisson
-  '); // Identique à WHERE nomboisson = ?
+  $reponseBddMachineacafe = $database->prepare ('
+    SELECT  nomboisson, nomingredients, qteboisson
+    FROM boisson_ingredients
+    INNER JOIN boisson ON boisson.codeboisson = boisson_ingredients.boisson_codeboisson
+    INNER JOIN ingredients ON ingredients.codeingredients = boisson_ingredients.ingredients_codeingredients
+    WHERE nomboisson = ?
+  '); // Identique à WHERE nomboisson = :nomboisson
 
-  $reponseBddMachineacafe->execute(array('nomboisson'=> $choixBoisson)); // Avec le ? s'écrit : execute(array($_POST["choixBoisson"]));
- 
+  $reponseBddMachineacafe->execute(array($choixBoisson)); // Avec le ? s'écrit : execute(array($_POST["choixBoisson"]));
+  
+  // Affiche la valeur nomboisson selectionnée
+  // var_dump(array($choixBoisson)); 
+
   // affiche chaque entrée une à une
   while ($tabDonnees = $reponseBddMachineacafe->fetch())
   {
     if ($i==0)
     {
       $i=1;// Affiche le nom de la boisson une seule fois
-      $recetteFinale .= " Vous avez commandé un ".$tabDonnees["nomboisson"]."<br>";
+      $recetteFinale .= "<p>"." Vous avez commandé un ".$tabDonnees["nomboisson"]."</p>"."Dont la recette est"."<br>";
     }
-      $recetteFinale .= $tabDonnees["nomingredients"]." x ".$tabDonnees["qteboisson"]."<br>";
+      $recetteFinale .= $tabDonnees["nomingredients"]." ".$tabDonnees["qteboisson"]." dose(s) <br>";
     
   }
 
